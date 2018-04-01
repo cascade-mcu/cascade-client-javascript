@@ -1,7 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const app = express();
+const fetch = require('node-fetch');
+const moment = require('moment');
+const _ = require('lodash');
 
+const app = express();
 app.use(cors());
 
 app.get('/', function(req, res){
@@ -12,3 +15,51 @@ app.get('/', function(req, res){
 });
 
 app.listen(3000);
+
+const createLog = async (variables) => {
+  const body = {
+    query: `
+      mutation($sensorId: ID!, $readingTime: DateTime!, $value: Float!) {
+        createLog(
+          data: {
+            sensor: {
+              connect: {
+                id: $sensorId,
+              }
+            },
+            readingTime: $readingTime,
+            value: $value
+          }
+        ) {
+          id
+          readingTime
+          value
+        }
+      }
+    `,
+    variables,
+  };
+
+  const response = await fetch('http://localhost:4000', {
+    method: 'POST',
+    body:    JSON.stringify(body),
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then(res => res.json());
+
+  console.log(response);
+  console.log("Log created!");
+};
+
+const sensorIds = {
+  temperature: "cjfdxdmnjk82r0b91zbx87l4o",
+  humidity: "cjfdxdmnjk82t0b91orh1g9dh",
+};
+
+setInterval(() => {
+  createLog({
+    sensorId: sensorIds.temperature,
+    readingTime: moment().toISOString(),
+    value: _.random(0, 200),
+  })
+}, 10000);
