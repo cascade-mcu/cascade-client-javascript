@@ -61,5 +61,13 @@ setInterval(() => {
     sensorId: sensorIds.temperature,
     readingTime: moment().toISOString(),
     value: _.random(0, 200),
-  })
+  });
 }, 10000);
+
+setInterval(() => {
+  createLog({
+    sensorId: sensorIds.humidity,
+    readingTime: moment().toISOString(),
+    value: _.random(0, 100),
+  });
+}, 12000);
