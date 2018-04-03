@@ -10,7 +10,7 @@ app.use(cors());
 app.get('/', function(req, res){
   res.json({
     cascadeCompatible: true,
-    id: 'cjfdxdmnjk82q0b9171i4gq9c',
+    id: 'cjfjrp0rrqnow0b81wp3xsf2s',
   });
 });
 
@@ -52,8 +52,8 @@ const createLog = async (variables) => {
 };
 
 const sensorIds = {
-  temperature: "cjfdxdmnjk82r0b91zbx87l4o",
-  humidity: "cjfdxdmnjk82t0b91orh1g9dh",
+  temperature: 'cjfjrp0rrqnox0b81kvpu407s',
+  humidity: 'cjfjrp0rrqnoz0b81hj2915mm',
 };
 
 setInterval(() => {
